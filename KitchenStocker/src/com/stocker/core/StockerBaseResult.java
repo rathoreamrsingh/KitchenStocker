@@ -17,7 +17,7 @@ public class StockerBaseResult<Result> {
 	/**
 	 * @return the result
 	 */
-	public Result getResult() {
+	public Result getResultedObject() {
 		return result;
 	}
 
@@ -25,7 +25,7 @@ public class StockerBaseResult<Result> {
 	 * @param result
 	 *            the result to set
 	 */
-	public void setResult(Result result) {
+	public void setResultedObject(Result result) {
 		this.result = result;
 	}
 

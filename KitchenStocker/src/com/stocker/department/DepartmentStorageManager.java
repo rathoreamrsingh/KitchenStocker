@@ -3,10 +3,11 @@
  */
 package com.stocker.department;
 
+import java.util.List;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
-import com.stocker.core.StockerSession;
 import com.stocker.core.StockerStorageContext;
 import com.stocker.exception.StockerCoreException;
 
@@ -62,8 +63,48 @@ public class DepartmentStorageManager {
 			DepartmentEntity departmentEntity = new DepartmentEntity();
 			departmentEntity.setId(id);
 			hibernateSession.delete(departmentEntity);
+			hibernateSession.flush();
 		} catch (HibernateException hbe) {
 			throw new StockerCoreException(hbe);
 		}
+	}
+
+	public List<DepartmentEntity> retrieveDepartments(StockerStorageContext context) throws StockerCoreException {
+		List<DepartmentEntity> result = null;
+		try {
+			Session hibernateSession = context.getHibernateSession();
+			result = hibernateSession.createCriteria(DepartmentEntity.class).list();
+		} catch (HibernateException hbe) {
+			throw new StockerCoreException(hbe);
+		}
+		return result;
+	}
+
+	public DepartmentEntity retrieveDepartmentById(int id, StockerStorageContext context) throws StockerCoreException {
+		DepartmentEntity result = null;
+		try {
+			Session hibernateSession = context.getHibernateSession();
+			result = (DepartmentEntity) hibernateSession.get(DepartmentEntity.class, id);
+			hibernateSession.evict(result);
+		} catch (HibernateException hbe) {
+			throw new StockerCoreException(hbe);
+		}
+		return result;
+	}
+
+	public DepartmentEntity updateDeapartmentData(DepartmentEntity departmentEntity, StockerStorageContext context)
+			throws StockerCoreException {
+		DepartmentEntity result = null;
+		try {
+			Session hibernateSession = context.getHibernateSession();
+			hibernateSession.update(departmentEntity);
+			hibernateSession.flush();
+			hibernateSession.evict(departmentEntity);
+			result = departmentEntity;
+		} catch (HibernateException hbe) {
+			throw new StockerCoreException(hbe);
+		}
+
+		return result;
 	}
 }
