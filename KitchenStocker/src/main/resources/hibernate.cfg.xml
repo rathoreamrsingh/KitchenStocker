@@ -18,7 +18,9 @@
 		<property name="show_sql">true</property>
 
 
-		<mapping class="com.stocker.department.DepartmentEntity"/>
+		<mapping class="com.stocker.department.DepartmentEntity" />
+		<mapping class="com.stocker.category.CategoryEntity" />
+		<mapping class="com.stocker.category.SubCategoryEntity" />
 	</session-factory>
 
 </hibernate-configuration>
